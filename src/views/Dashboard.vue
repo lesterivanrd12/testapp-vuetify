@@ -6,18 +6,35 @@
       <v-container class="my-5">
 
         <v-layout row class="mx-1 my-5">
-          <v-btn small plain @click="sortBy('title')">
-            <v-icon left small>mdi-folder</v-icon>
-            <span class="caption text-lowercase">By project name</span>
-          </v-btn>
-          <v-btn small plain @click="sortBy('person')">
-            <v-icon left small>mdi-account</v-icon>
-            <span class="caption text-lowercase">By person</span>
-          </v-btn>
-          <v-btn small plain @click="sortBy('status')">
-            <v-icon left small>mdi-list-status</v-icon>
-            <span class="caption text-lowercase">By status</span>
-          </v-btn>
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn small plain @click="sortBy('title')" v-on="on">
+                <v-icon left small>mdi-folder</v-icon>
+                <span class="caption text-lowercase">By project name</span>
+              </v-btn>
+            </template>
+            <span>Sort project by project name</span>
+          </v-tooltip>
+
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn small plain @click="sortBy('person')" v-on="on">
+                <v-icon left small>mdi-account</v-icon>
+                <span class="caption text-lowercase">By person</span>
+              </v-btn>
+            </template>
+            <span>Sort project by person</span>
+          </v-tooltip>
+
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn small plain @click="sortBy('status')" v-on="on">
+                <v-icon left small>mdi-list-status</v-icon>
+                <span class="caption text-lowercase">By status</span>
+              </v-btn>
+            </template>
+            <span>Sort project by status</span>
+          </v-tooltip>
         </v-layout>
 
         <v-card class="pa-3 ma-3" v-for="project in projects" :key="project.title">
