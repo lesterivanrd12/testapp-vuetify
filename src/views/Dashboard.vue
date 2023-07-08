@@ -49,7 +49,7 @@
             </v-flex>
             <v-flex xs6 sm4 md2>
               <div class="caption grey--text ">Due by</div>
-              <div class="">{{ project.due }}</div>
+              <v-chip>{{ project.due }}</v-chip>
             </v-flex>
             <v-flex xs6 sm4 md2>
               <div class="right">
