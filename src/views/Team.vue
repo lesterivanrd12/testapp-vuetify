@@ -44,6 +44,6 @@ export default {
         { name: 'Lester Ivan Dalaguit', role: 'Full-stack Developer', avatar: '/avatar-5.png' },
       ]
     }
-  },
+  },  
 }
 </script>

@@ -7,6 +7,22 @@
                 <span class="white--text">Human Resource Information System</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
+
+            <!-- Dropdown menu  -->
+            <v-menu offset-y>
+                <template v-slot:activator="{ on }">
+                    <v-btn elevation="0"  v-on="on" color="primary">
+                        <v-icon left>mdi-chevron-down</v-icon>
+                        <span>Menu</span>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
+                        <v-list-tile-title>{{ link.text }}</v-list-tile-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+
             <v-btn elevation="0" color="primary">
                 <span >Sign Out</span>
                 <v-icon right>mdi-logout</v-icon>
