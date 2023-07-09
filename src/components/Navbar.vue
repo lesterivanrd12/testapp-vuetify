@@ -16,11 +16,20 @@
         <v-navigation-drawer app v-model="drawer" class="">
             <!-- Nav Avatar -->
             <v-layout column align-center>
-                <v-flex class="mt-5">
-                    <v-avatar size="100" class="grey lighten-2">
+                <v-flex class="my-10">
+                    <!-- <v-avatar size="100" class="grey lighten-2">
                         <img src="/avatar-5.png" >
                     </v-avatar>
-                    <v-subheader>Admin User</v-subheader>
+                    <v-subheader>Lester Ivan Dalaguit</v-subheader> -->
+                    <v-row class="mt-5" justify="center">
+                        <v-avatar size="100">
+                            <img src="/avatar-5.png" >
+                        </v-avatar>
+                    </v-row>
+                    <v-row justify="center">
+                        <div class="subheading">Lester Ivan Dalaguit</div>
+                        <div class="grey--text">Full-stack Developer</div>
+                    </v-row>
                 </v-flex>
             </v-layout>
 
