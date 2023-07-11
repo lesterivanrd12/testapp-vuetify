@@ -48,6 +48,12 @@
                     </v-row>
                 </v-flex>
             </v-layout>
+            
+
+            <!-- Dialog  -->
+            <v-row justify="center" class="my-5">
+                <Popup />
+            </v-row>
 
             <!-- Nav Links -->
             <v-list-item-group>
@@ -69,7 +75,12 @@
 </template>
 
 <script>
+import Popup from './Popup.vue'
+
 export default {
+    components: {
+        Popup
+    },
     data () {
         return {
             drawer: false,
