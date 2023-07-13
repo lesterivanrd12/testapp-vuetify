@@ -1,5 +1,5 @@
 <template>
-  <div class="team">
+  <div style="background-color: #f5f5f5; height:100%" class="pa-4 team">
     <h2 class="subheading">Team</h2>
 
     <v-container class="my-5">
@@ -44,6 +44,6 @@ export default {
         { name: 'Lester Ivan Dalaguit', role: 'Full-stack Developer', avatar: '/avatar-5.png' },
       ]
     }
-  },
+  },  
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
-    <div class="dashboard">
+    <div style="background-color: #f5f5f5; height:100%" class="pa-4 dashboard">
       <h2 class="subheading">Dashboard</h2>
-
 
       <v-container class="my-5">
 
@@ -49,13 +48,12 @@
             </v-flex>
             <v-flex xs6 sm4 md2>
               <div class="caption grey--text ">Due by</div>
-              <v-chip>{{ project.due }}</v-chip>
+              <v-chip class="my-1">{{ project.due }}</v-chip>
             </v-flex>
             <v-flex xs6 sm4 md2>
-              <div class="right">
-                <v-chip class="v-chip--active white--text caption my-2"
+                <div class="caption grey--text ">Status</div>
+                <v-chip class="v-chip--active white--text caption my-1"
                   :color="`${project.status}`" >{{ project.status }}</v-chip>
-              </div>
             </v-flex>
           </v-layout>
         </v-card>

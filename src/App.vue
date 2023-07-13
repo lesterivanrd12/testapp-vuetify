@@ -1,7 +1,7 @@
 <template>
   <v-app> 
     <Navbar />
-    <v-main class="ma-4">
+    <v-main>
       <router-view></router-view>
     </v-main>
   </v-app>
@@ -18,7 +18,6 @@ export default {
 
   data () {
     return {
-      
     }
   }
 };
