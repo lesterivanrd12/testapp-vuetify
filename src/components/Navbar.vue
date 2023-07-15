@@ -93,6 +93,7 @@ export default {
                 { icon: 'mdi-view-dashboard', text: 'Dashboard', route: '/'},
                 { icon: 'mdi-folder', text: 'Projects', route: '/projects'},
                 { icon: 'mdi-account', text: 'Team', route: '/team'},
+                { icon: 'mdi-account-group', text: 'Users', route: '/users'},
             ]
         }
     }
