@@ -1,20 +1,19 @@
 <template>
-    <div style="background-color: #f5f5f5; height:100%" class="pa-4 projects">
+    <div style="background-color: #fff; height:100%" class="pa-4 projects">
         <h2 class="subheading">Users</h2>
 
         <v-container>
             <v-data-table
-            height="700px"
-            :headers="headers"
-            :items="users"
-            :items-per-page="10"
-            class="elevation-1"
+              height="700px"
+              :headers="headers"
+              :items="users"
+              :items-per-page="10"
+              class="elevation-1"
             >
             
-            <template v-slot:[`item.actions`]="{ item }">
-                <template v-for="action in item.actions">
+            <template v-slot:item.actions="{ item }">
+                <td>
                     <v-btn
-                        v-if="action === 'view'"
                         elevation="0"
                         tile
                         small
@@ -25,7 +24,6 @@
                         <v-icon style="color: white">mdi-eye</v-icon>
                     </v-btn>
                     <v-btn
-                        v-if="action === 'edit'"
                         elevation="0"
                         tile
                         small
@@ -37,7 +35,6 @@
                         <v-icon style="color: white">mdi-pencil</v-icon>
                     </v-btn>
                     <v-btn
-                        v-if="action === 'delete'"
                         elevation="0"
                         tile
                         small
@@ -48,7 +45,7 @@
                     >
                         <v-icon style="color: white">mdi-delete</v-icon>
                     </v-btn>
-                </template>
+                </td>
             </template>
 
 
@@ -63,64 +60,64 @@ export default {
     data() {
         return {
             headers: [
-                { text: 'Full Name', align: 'start', value: 'fullname',},
-                { text: 'Email', value: 'email' },
-                { text: 'Role', value: 'role' },
-                { text: 'Department', value: 'department' },
-                { text: 'Status', value: 'status' },
-                { text: 'Date Employed', value: 'dateemployed' },
-                { text: 'Date Created', value: 'datecreated' },
-                { text: 'Actions', align:'center', value: 'actions' },
+                { text: 'Full Name',  align: 'start', value: 'fullname'},
+                { text: 'Email', align: 'start', value: 'email' },
+                { text: 'Role',  align: 'start', value: 'role' },
+                { text: 'Department',  align: 'start' ,value: 'department' },
+                { text: 'Status', align: 'start', value: 'status' },
+                { text: 'Date Employed', align: 'start', value: 'dateemployed' },
+                { text: 'Date Cfullnamereated', align: 'start', value: 'datecreated' },
+                { text: '', align:'center', value: 'actions', sortable: false },
             ],
             users: [
                 {
                     fullname: 'Jerven Latayada',
-                    email: 159,
-                    role: 6.0,
-                    department: 24,
-                    status: 4.0,
-                    dateemployed: 1,
-                    datecreated: 1,
+                    email: 'jerven.latayada@gmail.com',
+                    role: 'Back-end Developer',
+                    department: 'Devs',
+                    status: 'active',
+                    dateemployed: '10th Dec 2021',
+                    datecreated: '10th Dec 2021',
                     actions: ['view', 'edit', 'delete']
                 },
                 {
                     fullname: 'Francis Dave Moneva',
-                    email: 237,
-                    role: 9.0,
-                    department: 37,
-                    status: 4.3,
-                    dateemployed: 1,
-                    datecreated: 1,
+                    email: 'francis.moneva@gmail.com',
+                    role: 'Front-end Developer',
+                    department: 'Devs',
+                    status: 'active',
+                    dateemployed: '23rd Nov 2019',
+                    datecreated: '23rd Nov 2019',
                     actions: ['view', 'edit', 'delete']
                 },
                 {
                     fullname: 'Kenneth Carredo',
-                    email: 262,
-                    role: 16.0,
-                    department: 23,
-                    status: 6.0,
-                    dateemployed: 7,
-                    datecreated: 1,
+                    email: 'kenneth.carredo@gmail.com',
+                    role: 'Video Editor',
+                    department: 'Creatives Department',
+                    status: 'active',
+                    dateemployed: '12th Feb 2018',
+                    datecreated: '12th Feb 2018',
                     actions: ['view', 'edit', 'delete']
                 },
                 {
                     fullname: 'Neil Adrian Balolong',
-                    email: 262,
-                    role: 16.0,
-                    department: 23,
-                    status: 6.0,
-                    dateemployed: 7,
-                    datecreated: 1,
+                    email: 'neil.balolong@gmail.com',
+                    role: 'Project Manager',
+                    department: 'Admin',
+                    status: 'active',
+                    dateemployed: '22nd Jan 2020',
+                    datecreated: '22nd Jan 2020',
                     actions: ['view', 'edit', 'delete']
                 },
                 {
                     fullname: 'Lester Ivan Dalaguit',
-                    email: 262,
-                    role: 16.0,
-                    department: 23,
-                    status: 6.0,
-                    dateemployed: 7,
-                    datecreated: 1,
+                    email: 'lesterivan.dalaguit@gmail.com',
+                    role: 'Full-stack Developer',
+                    department: 'Devs',
+                    status: 'active',
+                    dateemployed: '1st July 2020',
+                    datecreated: '1st July 2020',
                     actions: ['view', 'edit', 'delete']
                 },
             ],

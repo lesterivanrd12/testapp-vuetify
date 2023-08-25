@@ -1,81 +1,257 @@
 <template>
-  <div style="background-color: #f5f5f5; height:100%" class="pa-4 projects">
-    <h2 class="subheading">Projects</h2>
+  <v-layout>
+    
+    <v-container class="ma-5">
+      <v-row class="mb-10">
+        <h1 class="subheading">Projects</h1>
+      </v-row>
+      <v-row justify="center" align="center">
+        <v-text-field
+          prepend-inner-icon="mdi-magnify"
+          placeholder="Search here..."
+          outlined
+        >
+        </v-text-field>
+        <v-spacer></v-spacer>
+        <!-- <popup /> -->
 
-    <v-container class="my-5">
-      <v-expansion-panels>
-        <v-expansion-panel v-for="project in myProjects" :key="project.title">
-          <v-expansion-panel-header>{{ project.title }}</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-card flat>
-              <v-card-text class="px-4 py-0 grey--text">
-                <div class="font-weight-bold">due by {{ project.due }}</div>
-                <div>{{ project.content }}</div>
-              </v-card-text>
-            </v-card>
-          </v-expansion-panel-content>
-        </v-expansion-panel>        
-      </v-expansion-panels>
-    </v-container>
+        <v-dialog v-model="dialog" max-width="800">
+        <template v-slot:activator="{on}">
+            <v-btn
+              v-on="on"
+              dark
+            >Add a new project</v-btn>
+        </template>
 
-    <!-- <v-card
-    class="mx-auto"
-    max-width="344"
-    outlined
-  >
-    <v-list-item three-line>
-      <v-list-item-content>
-        <div class="text-overline mb-4">
-          OVERLINE
-        </div>
-        <v-list-item-title class="text-h5 mb-1">
-          Headline 5
-        </v-list-item-title>
-        <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-      </v-list-item-content>
+        <v-card class="pa-4">
+            <v-card-title>
+                <h3>Add a new project</h3>
+            </v-card-title>
+            <v-form>
+              <v-container>
+                <v-row>
+                  <v-col>
+                    <v-row>
+                        <v-menu offset-y close-on-click>
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                  class="ma-1"
+                                  outlined
+                                  v-model="form.title"
+                                  label="Project Title"
+                                ></v-text-field>
+                                <v-text-field
+                                  class="ma-1"
+                                  outlined
+                                  label="Due date"
+                                  type="date"
+                                  :value="formattedDate"
+                                  v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker v-model="form.due"></v-date-picker>
+                        </v-menu>
+                    </v-row>
+                    <v-row>
+                      <v-autocomplete
+                        v-model="form.person"
+                        :items="accountList"
+                        label="Person in charge"
+                        class="ma-1" 
+                        outlined
+                        small-chips
+                        deletable-chips
+                      ></v-autocomplete>
+                    </v-row>
+                    <v-row>
+                        <v-textarea
+                          class="ma-1"
+                          outlined
+                          v-model="form.content"
+                          label="Project Description"
+                        ></v-textarea>
+                    </v-row>
+                    <v-flex class="d-flex justify-end">
+                        <v-btn class="error mx-1 mt-3" @click="cancel">Cancel</v-btn>
+                        <v-btn
+                          class="success mx-1 mt-3"
+                          @click="addProject"
+                          :loading="loading"
+                        >Add project</v-btn> 
+                    </v-flex>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+        </v-card>
+      </v-dialog>
+      </v-row>
 
-      <v-list-item-avatar
-        tile
-        size="80"
-        color="grey"
-      ></v-list-item-avatar>
-    </v-list-item>
+      <v-container>
+        <v-data-table
+          height="700px"
+          :headers="projectHeader"
+          :items="projects"
+          :items-per-page="10"
+          :loading="loading"
+          loading-text="Loading... Please wait"
+          class="elevation-1"
+        >
+        
+        <template v-slot:item.content="{ item}">
+          <td style="max-width: 500px">{{item.content}}</td>
+        </template>
 
-    <v-card-actions>
-      <v-btn
-        outlined
-        rounded
-        text
-      >
-        Button
-      </v-btn>
-    </v-card-actions>
-    </v-card> -->
-      
-  </div>
+        <!-- <template v-slot:item.due="{ item }">
+          <td style="max-width: 150px">{{item.due}}</td>
+        </template> -->
+
+        <template v-slot:item.actions="{ item }">
+          <td style="max-width: 200px;">
+            <!-- <v-btn
+                icon
+                elevation="0"
+                tile
+                small
+                class="mx-1"
+                :key="action"
+            >
+                <v-icon style="color: #f39c12">mdi-eye</v-icon>
+            </v-btn>
+            <v-btn
+                icon
+                elevation="0"
+                tile
+                small
+                dark
+                class="mx-1"
+                :key="action"
+            >
+                <v-icon style="color: #22a7f0">mdi-pencil</v-icon>
+            </v-btn> -->
+            <v-btn
+                icon
+                elevation="0"
+                tile
+                small
+                dark
+                class="mx-1"
+                :key="action"
+                @click="deleteProject(item.document_id)"
+            >
+                <v-icon style="color: #fa2a00">mdi-delete</v-icon>
+            </v-btn>
+          </td>
+        </template>
+        </v-data-table>
+      </v-container>
+    </v-container> 
+  </v-layout>
 
 </template>
 
 <script>
+// import Popup from '../components/Popup'
+import { mapActions, mapMutations } from 'vuex'
+import database from '@/firebase'
+import { collection, doc, getDocs, addDoc, deleteDoc } from "firebase/firestore"
+import format from 'date-fns/format'
+import swal from 'sweetalert';
+
+
 export default {
+  // components: {
+  //   Popup,
+  // },
   data() {
     return {
-      projects: [
-        { title: 'Design a new website', person: 'Francis Dave Moneva', due: '1st Nov 2023', status: 'overdue' , content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'},
-        { title: 'Code up payroll backend', person: 'Jerven Latayada', due: '10th Dec 2023', status: 'ongoing', content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'},
-        { title: 'Design video thumbnails', person: 'Kenneth Carredo', due: '21st Nov 2023', status: 'complete', content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.' },
-        { title: 'Create community forum', person: 'Neil Adrian Balolong', due: '28th Oct 2023', status: 'complete' , content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'},
-        { title: 'Create Expansion Panels 1', person: 'Lester Ivan Dalaguit', due: '28th Oct 2023', status: 'complete' , content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'},
-        { title: 'Create Expansion Panels 2', person: 'Lester Ivan Dalaguit', due: '28th Oct 2023', status: 'complete' , content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'}
+      dialog: false,
+      loading: false,
+      projectHeader: [
+        { text: 'Project Title', align: 'start', value: 'title', sortable: false},
+        { text: 'Project Description', align: 'start', value: 'content', sortable: false},
+        { text: 'Assigned to', align: 'start', value: 'person', sortable: false},
+        { text: 'Due date', align: 'start', value: 'due', sortable: false },
+        { text: '', align: 'center', value: 'actions', sortable: false }
+        // { text: 'Status', align: 'start', value: 'title', sortable: false }
+      ],
+      projects: [],
+      form: {},
+      title: null,
+      person: null,
+      due: null,
+      status: null,
+      content: null,
+      accountList: [
+        'Lester Ivan Dalaguit',
+        'Jaya Erika Embodo',
+        'Juan Dela Cruz',
+        'John Doe',
+        'Ada Lovelace'
       ],
     }
   },
   computed: {
-    myProjects() {
-      return this.projects.filter(project => {
-        return project.person === 'Lester Ivan Dalaguit'
-      })
+      formattedDate() {
+          return this.form.due ? (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) : ''
+      }
+  },
+  methods: {
+    ...mapActions('projects', ['fetchProjects']),
+    ...mapMutations('projects', ['SET_PROJECTS']),
+    async getProjects() {
+      this.projects = []
+      this.loading = true
+      const querySnapshot = await getDocs(collection(database, "projects"));
+      querySnapshot.docs.forEach((doc) => {
+        // console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+
+        const projectData = doc.data()
+        this.projects.push(projectData)
+        this.loading = false
+      });
+    },
+    cancel() {
+        this.dialog = false;
+    },
+    addProject() {
+        this.loading = true
+        const payload = addDoc(collection(database, "projects"), {
+            title: this.form.title ? this.form.title : null,
+            person: this.form.person ? this.form.person : null,
+            due: this.form.due ? this.form.due : null,
+            content: this.form.content ? this.form.content : null
+        })
+        console.log('Added to database', payload)
+        swal({
+          title: `Successfully Added!`,
+          text: '',
+          icon: 'success',
+          confirmButtonColor: '#009c25',
+          confirmButtonText: 'OK'
+        })
+        this.dialog = false
+        this.loading = false
+        this.form = {}
+        this.getProjects()
+    },
+    async deleteProject(documentId) {
+      const documentRef = doc(database, "projects", documentId)
+      
+      try {
+        await deleteDoc(documentRef)
+        console.log("Document successfully deleted!");
+      } catch (error) {
+        console.error("Error deleting document: ", error)
+      }
+      this.getProjects()
+    },
+    editProject() {
+
     }
-  }
+  },
+  mounted() {
+    this.getProjects()
+  },
 }
 </script>

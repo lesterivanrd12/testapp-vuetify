@@ -1,5 +1,5 @@
 <template>
-    <div style="background-color: #f5f5f5; height:100%" class="pa-4 dashboard">
+    <div style="background-color: #fff; height:100%" class="pa-4 dashboard">
       <h2 class="subheading">Dashboard</h2>
 
       <v-container class="my-5">

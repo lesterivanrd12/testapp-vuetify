@@ -31,34 +31,16 @@
 
         <v-navigation-drawer app v-model="drawer" color="primary">
             <!-- Nav Avatar -->
-            <v-layout column align-center>
-                <v-flex class="my-3">
-                    <!-- <v-avatar size="100" class="grey lighten-2">
-                        <img src="/avatar-5.png" >
+            <v-row>
+                <v-col class="my-3" align="center">
+                    <v-avatar class="ma-3" size="100">
+                        <img src="/avatar-5.png">
                     </v-avatar>
-                    <v-subheader>Lester Ivan Dalaguit</v-subheader> -->
-                    <v-row class="mt-5" justify="center">
-                        <v-avatar size="100">
-                            <img src="/avatar-5.png" >
-                        </v-avatar>
-                    </v-row>
-                    <v-row justify="center">
-                        <h1 class="white--text heading">Lester Ivan Dalaguit</h1>
-                        <p class="white--text">Full-stack Developer</p>
-                    </v-row>
-                </v-flex>
-            </v-layout>
-            <v-divider
-                class="my-3"
-                color="white"
-                style="height: 8px"
-            ></v-divider>
-            
-
-            <!-- Dialog  -->
-            <v-row justify="center" class="my-5">
-                <Popup />
+                    <h1 class="white--text heading">Lester Ivan Dalaguit</h1>
+                    <p class="white--text">Full-stack Developer</p>
+                </v-col>
             </v-row>
+
 
             <!-- Nav Links -->
             <v-list-item-group>
@@ -80,15 +62,14 @@
 </template>
 
 <script>
-import Popup from './Popup.vue'
 
 export default {
     components: {
-        Popup
+
     },
     data () {
         return {
-            drawer: false,
+            drawer: true,
             links: [
                 { icon: 'mdi-view-dashboard', text: 'Dashboard', route: '/'},
                 { icon: 'mdi-folder', text: 'Projects', route: '/projects'},
